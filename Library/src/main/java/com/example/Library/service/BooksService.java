@@ -9,6 +9,7 @@ import com.example.Library.repository.BooksRepository;
 
 @Service
 public class BooksService {
+    
     private final  BooksRepository booksRepository;
 
     public  BooksService(BooksRepository booksRepository) {
@@ -30,6 +31,4 @@ public class BooksService {
     public void  deleteBook(Integer id){
         booksRepository.deleteById(id);
     }
-
-
 }
