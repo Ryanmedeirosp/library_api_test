@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.Library.model.Books;
 import com.example.Library.model.User;
 import com.example.Library.repository.UserRepository;
 
@@ -11,7 +12,6 @@ import com.example.Library.repository.UserRepository;
 public class UserService {
 
     private final UserRepository userRepository;
-
     
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
