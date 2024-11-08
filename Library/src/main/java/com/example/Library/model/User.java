@@ -10,13 +10,15 @@ import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
+    
     String name;
 
     String email;
@@ -25,9 +27,9 @@ public class User {
 
     Integer singleCard;
 
-    Boolean status;
+    String status;
 
-    public User(String name, String email, LocalDate registerDate, Integer singleCard, Boolean status) {
+    public User(String name, String email, LocalDate registerDate, Integer singleCard, String status) {
         this.name = name;
         this.email = email;
         this.registerDate = registerDate;
