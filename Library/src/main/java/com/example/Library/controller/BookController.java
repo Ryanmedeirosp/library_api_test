@@ -11,29 +11,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.Library.model.Books;
-import com.example.Library.service.BooksService;
+import com.example.Library.model.Book;
+import com.example.Library.service.BookService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequiredArgsConstructor
 @RequestMapping("/books")
 @RestController
-public class BooksController {
+public class BookController {
     
-    private final BooksService bookService;
+    private final BookService bookService;
 
     @GetMapping()
-    public List<Books> getAllBooks() {
+    public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
     @GetMapping("/{id}")
-    public Books getBookById(@PathVariable Integer id){
+    public Book getBookById(@PathVariable Integer id){
         return bookService.getBookById(id);
     }
 
     @PostMapping()
-    public void addBook(@RequestBody Books book) {
+    public void addBook(@RequestBody Book book) {
          bookService.createBook(book);
     }
 

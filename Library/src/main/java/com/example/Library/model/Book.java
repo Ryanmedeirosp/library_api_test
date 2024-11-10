@@ -2,6 +2,7 @@ package com.example.Library.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,21 +15,25 @@ import lombok.NoArgsConstructor;
 @Table(name = "books")
 @Data
 @NoArgsConstructor
-public class Books {
+public class Book {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
+    @Column(name = "title")
     String title;
 
+    @Column(name = "author")
     String author;
 
+    @Column(name = "isbn")
     String isbn;
 
+    @Column(name = "year_of_publication")
     LocalDate yearOfPublication;
 
-    public Books(String title, String author, String isbn, LocalDate yearOfPublication) {
+    public Book(String title, String author, String isbn, LocalDate yearOfPublication) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;

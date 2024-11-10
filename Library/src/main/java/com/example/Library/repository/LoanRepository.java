@@ -9,5 +9,4 @@ import com.example.Library.model.Loan;
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Integer> {
 
-    
 } 
