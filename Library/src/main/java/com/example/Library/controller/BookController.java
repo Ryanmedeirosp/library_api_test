@@ -32,6 +32,16 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
+    @GetMapping("autor/{author}")
+    public List<Book> getBookByAuthor(@PathVariable String author){
+        return bookService.getBookByAuthor(author);
+    }
+
+    @GetMapping("year/{yearOfPublication}")
+    public List<Book> getBookByYearOfPublication(@PathVariable Integer yearOfPublication){
+        return bookService.getBookByYearOfPublication(yearOfPublication);
+    }
+
     @PostMapping()
     public void addBook(@RequestBody Book book) {
          bookService.createBook(book);

@@ -1,7 +1,7 @@
 CREATE TABLE users(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
     register_date DATE NOT NULL,
     single_card INTEGER NOT NULL,
     status VARCHAR(50) NOT NULL
@@ -20,7 +20,7 @@ CREATE TABLE books(
     title VARCHAR(50) NOT NULL,
     author VARCHAR(50) NOT NULL,
     isbn VARCHAR(13) NOT NULL,
-    year_of_publication DATE NOT NULL
+    year_of_publication INTEGER NOT NULL
 );
 
 CREATE TABLE loan_book(

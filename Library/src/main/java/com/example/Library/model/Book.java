@@ -31,12 +31,13 @@ public class Book {
     String isbn;
 
     @Column(name = "year_of_publication")
-    LocalDate yearOfPublication;
+    Integer yearOfPublication;
 
-    public Book(String title, String author, String isbn, LocalDate yearOfPublication) {
+    public Book(String title, String author, String isbn, Integer yearOfPublication) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.yearOfPublication = yearOfPublication;
     }
+
 }
