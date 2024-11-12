@@ -42,4 +42,10 @@ public class LoanController {
     public void deleteLoan(@PathVariable Integer id) {
         loanService.deleteLoan(id);
     }
+
+    //http://localhost:8080/loans/updatetest
+    // @GetMapping("/updatetest")
+    // public void updateTable(){
+    //     loanService.updateTable();
+    // }
 }

@@ -25,6 +25,8 @@ public class UserService {
     }
 
     public void createUser(User user){
+        if(userRepository.findByEmail(user.getEmail()) != null) throw new RuntimeException();
+
         userRepository.save(user);
     }
 

@@ -1,12 +1,16 @@
 package com.example.Library.model;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,16 +35,22 @@ public class User {
     LocalDate registerDate;
 
     @Column(name = "single_card")
-    Integer singleCard;
+    UUID singleCard;
 
     @Column(name = "status")
     String status;
 
-    public User(String name, String email, LocalDate registerDate, Integer singleCard, String status) {
+
+
+    @OneToMany(mappedBy = "loans")
+    List<Loan> loans;
+
+    public User(String name, String email, LocalDate registerDate, String status) {
         this.name = name;
         this.email = email;
         this.registerDate = registerDate;
-        this.singleCard = singleCard;
         this.status = status;
+        this.singleCard = UUID.randomUUID();
     } 
+    
 }

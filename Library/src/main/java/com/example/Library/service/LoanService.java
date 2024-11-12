@@ -31,4 +31,11 @@ public class LoanService {
     public void deleteLoan(Integer id){
         loanRepository.deleteById(id);
     }
+
+    // public void updateTable(){
+
+    //     Long tableCount = loanRepository.count();
+
+    //     System.out.println(tableCount);
+    // }
 }

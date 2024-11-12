@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.Library.model.Book;
 import com.example.Library.service.BookService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @RequestMapping("/books")
@@ -32,13 +33,17 @@ public class BookController {
         return bookService.getBookById(id);
     }
 
-    @GetMapping("autor/{author}")
-    public List<Book> getBookByAuthor(@PathVariable String author){
+    //http://localhost:8080/books/author?author={AUTHOR}
+
+    @GetMapping("/author")
+    public List<Book> getBookByAuthor(@RequestParam("author") String author){
         return bookService.getBookByAuthor(author);
     }
 
-    @GetMapping("year/{yearOfPublication}")
-    public List<Book> getBookByYearOfPublication(@PathVariable Integer yearOfPublication){
+    //http://localhost:8080/books/year?yearOfPublication={YEAR}
+
+    @GetMapping("/year")
+    public List<Book> getBookByYearOfPublication(@RequestParam("yearOfPublication") Integer yearOfPublication){
         return bookService.getBookByYearOfPublication(yearOfPublication);
     }
 

@@ -1,6 +1,5 @@
 package com.example.Library.service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -32,7 +31,6 @@ public class BookService {
         return bookRepository.findByYearOfPublication(yearOfPublication);
     }
 
-
     public void createBook(Book book){
         bookRepository.save(book);
     }
@@ -40,4 +38,5 @@ public class BookService {
     public void deleteBook(Integer id){
         bookRepository.deleteById(id);
     }
+
 }
