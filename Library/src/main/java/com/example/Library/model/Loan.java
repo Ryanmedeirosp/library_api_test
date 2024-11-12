@@ -43,7 +43,7 @@ public class Loan {
     List<Book> books;
 
     @ManyToOne()
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name="id_user", nullable=false)
     User user;
 
     public Loan(LocalDate startDate, LocalDate devolutionDate, String status) {

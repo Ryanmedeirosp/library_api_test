@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -40,9 +39,8 @@ public class User {
     @Column(name = "status")
     String status;
 
-
-
-    @OneToMany(mappedBy = "loans")
+    //Relação Um para Muitos entre Usuário e Empréstimo 
+    @OneToMany(mappedBy = "user")
     List<Loan> loans;
 
     public User(String name, String email, LocalDate registerDate, String status) {
