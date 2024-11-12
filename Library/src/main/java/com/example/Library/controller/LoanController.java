@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Library.model.Dto.LoanCreateDto;
 import com.example.Library.model.Loan;
 import com.example.Library.service.LoanService;
 
@@ -34,7 +35,7 @@ public class LoanController {
     }
 
     @PostMapping()
-    public void addLoan(@RequestBody Loan loan) {
+    public void addLoan(@RequestBody LoanCreateDto loan) {
          loanService.createLoan(loan);
     }
 
