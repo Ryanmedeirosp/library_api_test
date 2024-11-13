@@ -2,6 +2,8 @@ package com.example.Library.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +37,7 @@ public class Book {
     @Column(name = "year_of_publication")
     Integer yearOfPublication;
 
+    @JsonIgnore
     @ManyToMany
     List<Loan> loans;
 

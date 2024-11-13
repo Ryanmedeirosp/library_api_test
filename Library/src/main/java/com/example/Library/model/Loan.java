@@ -3,6 +3,9 @@ package com.example.Library.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,13 +38,14 @@ public class Loan {
     @Column(name = "status")
     String status;
 
-    @ManyToMany
+
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
         name = "loan_book", 
         joinColumns = @JoinColumn(name = "id_book"), 
         inverseJoinColumns = @JoinColumn(name = "id_loan"))
     List<Book> books;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="id_user", nullable=false)
     User user;

@@ -23,8 +23,8 @@ CREATE TABLE books(
     year_of_publication INTEGER NOT NULL
 );
 
-CREATE TABLE loan_book(
+CREATE TABLE books_loans(
     id SERIAL PRIMARY KEY NOT NULL,
-    id_loan INTEGER REFERENCES loans(id),
-    id_book INTEGER REFERENCES books(id)
+    loan_id INTEGER REFERENCES loans(id),
+    book_id INTEGER REFERENCES books(id)
 );
