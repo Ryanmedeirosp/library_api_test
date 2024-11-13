@@ -1,6 +1,8 @@
 package com.example.Library.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,12 @@ public class UserService {
     }
 
     public void createUser(User user){
-        if(userRepository.findByEmail(user.getEmail()) != null) throw new RuntimeException();
 
+        System.out.println(user.toString());
+
+        // if(userRepository.findByEmail(user.getEmail()).get() != null) throw new RuntimeException();
+        user.setLoans(new ArrayList<>());
+        user.setSingleCard(UUID.randomUUID());
         userRepository.save(user);
     }
 

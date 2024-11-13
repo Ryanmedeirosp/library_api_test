@@ -39,7 +39,8 @@ public class User {
     @Column(name = "status")
     public String status;
 
-    @OneToMany(mappedBy = "loans")
+    //Relação Um para Muitos entre Usuário e Empréstimo 
+    @OneToMany(mappedBy = "user")
     List<Loan> loans;
 
     public User(String name, String email, LocalDate registerDate, String status) {
@@ -47,7 +48,6 @@ public class User {
         this.email = email;
         this.registerDate = registerDate;
         this.status = status;
-        this.singleCard = UUID.randomUUID();
     } 
     
 }
