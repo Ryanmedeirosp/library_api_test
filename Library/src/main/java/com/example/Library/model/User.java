@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -23,24 +22,22 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    public Integer id;
 
     @Column(name = "name")
-    String name;
+    public String name;
 
     @Column(name = "email")
-    String email;
+    public String email;
 
     @Column(name = "register_date")
-    LocalDate registerDate;
+    public LocalDate registerDate;
 
     @Column(name = "single_card")
-    UUID singleCard;
+    public UUID singleCard;
 
     @Column(name = "status")
-    String status;
-
-
+    public String status;
 
     @OneToMany(mappedBy = "loans")
     List<Loan> loans;

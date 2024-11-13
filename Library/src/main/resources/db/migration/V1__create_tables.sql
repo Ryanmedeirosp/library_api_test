@@ -3,8 +3,8 @@ CREATE TABLE users(
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
     register_date DATE NOT NULL,
-    single_card INTEGER NOT NULL,
-    status VARCHAR(50) NOT NULL
+    single_card UUID NOT NULL,
+    status VARCHAR(20) DEFAULT 'inativo'
 );
 
 CREATE TABLE loans(

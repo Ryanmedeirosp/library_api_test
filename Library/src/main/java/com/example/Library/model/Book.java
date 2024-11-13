@@ -20,20 +20,20 @@ public class Book {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    public Integer id;
 
     @Column(name = "title")
-    String title;
+    public String title;
 
     @Column(name = "author")
-    String author;
+    public String author;
 
 
     @Column(name = "isbn")
-    String isbn;
+    public String isbn;
 
     @Column(name = "year_of_publication")
-    Integer yearOfPublication;
+    public Integer yearOfPublication;
 
     @ManyToMany
     List<Loan> loans;

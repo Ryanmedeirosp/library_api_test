@@ -24,16 +24,16 @@ public class Loan {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    public Integer id;
 
     @Column(name = "start_date")
-    LocalDate startDate;
+    public LocalDate startDate;
 
     @Column(name = "devolution_date")
-    LocalDate devolutionDate;
+    public LocalDate devolutionDate;
 
     @Column(name = "status")
-    String status;
+    public String status;
 
     @ManyToMany
     @JoinTable(
