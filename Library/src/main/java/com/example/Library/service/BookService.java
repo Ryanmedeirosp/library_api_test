@@ -34,16 +34,13 @@ public class BookService {
 
     public void createBook(Book book){
 
-        System.out.println("\n");
-        System.out.println(book);
-        System.out.println("\n");
-
         book.setLoans(new ArrayList<>());
 
         bookRepository.save(book);
     }
 
     public void deleteBook(Integer id){
+        Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("zika"));
         bookRepository.deleteById(id);
     }
 
