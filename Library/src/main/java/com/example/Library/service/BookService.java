@@ -1,5 +1,6 @@
 package com.example.Library.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -32,6 +33,13 @@ public class BookService {
     }
 
     public void createBook(Book book){
+
+        System.out.println("\n");
+        System.out.println(book);
+        System.out.println("\n");
+
+        book.setLoans(new ArrayList<>());
+
         bookRepository.save(book);
     }
 

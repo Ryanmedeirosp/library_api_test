@@ -38,11 +38,11 @@ public class Loan {
     @ManyToMany
     @JoinTable(
         name = "loan_book", 
-        joinColumns = @JoinColumn(name = "book_id"), 
-        inverseJoinColumns = @JoinColumn(name = "loan_id"))
+        joinColumns = @JoinColumn(name = "id_book"), 
+        inverseJoinColumns = @JoinColumn(name = "id_loan"))
     List<Book> books;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name="id_user", nullable=false)
     User user;
 

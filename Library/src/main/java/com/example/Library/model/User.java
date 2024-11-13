@@ -48,7 +48,6 @@ public class User {
         this.email = email;
         this.registerDate = registerDate;
         this.status = status;
-        this.singleCard = UUID.randomUUID();
     } 
     
 }
