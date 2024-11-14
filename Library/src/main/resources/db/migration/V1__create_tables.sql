@@ -4,7 +4,7 @@ CREATE TABLE users(
     email VARCHAR(50) UNIQUE NOT NULL,
     register_date DATE NOT NULL,
     single_card UUID NOT NULL,
-    status VARCHAR(50) NOT NULL
+    status VARCHAR(20) DEFAULT 'inativo'
 );
 
 CREATE TABLE loans(

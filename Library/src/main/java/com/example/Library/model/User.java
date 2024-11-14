@@ -22,22 +22,22 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    public Integer id;
 
     @Column(name = "name")
-    String name;
+    public String name;
 
     @Column(name = "email")
-    String email;
+    public String email;
 
     @Column(name = "register_date")
-    LocalDate registerDate;
+    public LocalDate registerDate;
 
     @Column(name = "single_card")
-    UUID singleCard;
+    public UUID singleCard;
 
     @Column(name = "status")
-    String status;
+    public String status;
 
     //Relação Um para Muitos entre Usuário e Empréstimo 
     @OneToMany(mappedBy = "user")
