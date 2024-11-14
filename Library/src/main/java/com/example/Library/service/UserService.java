@@ -30,7 +30,8 @@ public class UserService {
 
         System.out.println(user.toString());
 
-        // if(userRepository.findByEmail(user.getEmail()).get() != null) throw new RuntimeException();
+        if (userRepository.existsByEmail(user.getEmail()) == true) throw new RuntimeException("O email já existe"); 
+
         user.setLoans(new ArrayList<>());
         user.setSingleCard(UUID.randomUUID());
         userRepository.save(user);
@@ -39,4 +40,5 @@ public class UserService {
     public void deleteUser(Integer id){
         userRepository.deleteById(id);
     }
+
 }

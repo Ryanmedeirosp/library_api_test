@@ -28,6 +28,12 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    //http://localhost:8080/books/title
+    @GetMapping("/title")
+    public List<Book> getAllBooksByTitle() {
+        return bookService.getAllBooksByTitleAsc();
+    }
+
     @GetMapping("/{id}")
     public Book getBookById(@PathVariable Integer id){
         return bookService.getBookById(id);
