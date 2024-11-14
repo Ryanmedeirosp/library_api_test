@@ -40,7 +40,6 @@ public class BookService {
     }
 
     public void deleteBook(Integer id){
-        Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("zika"));
         bookRepository.deleteById(id);
     }
 

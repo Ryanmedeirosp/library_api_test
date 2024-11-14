@@ -41,9 +41,10 @@ public class Loan {
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
-        name = "loan_book", 
-        joinColumns = @JoinColumn(name = "id_book"), 
-        inverseJoinColumns = @JoinColumn(name = "id_loan"))
+    name = "books_loans", 
+    joinColumns = @JoinColumn(name = "loan_id"), 
+    inverseJoinColumns = @JoinColumn(name = "book_id") 
+    )
     List<Book> books;
     @JsonIgnore
     @ManyToOne
