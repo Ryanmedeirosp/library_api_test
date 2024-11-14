@@ -31,6 +31,10 @@ public class LoanService {
         return loanRepository.findAll();
     }
 
+    public List<Loan> getUserByLoanInDelay(){
+        return loanRepository.findUserByLoanInDelay();
+    }
+
     public Loan getLoanById(Integer id){
         return loanRepository.findById(id).orElse(null);
     }
@@ -50,7 +54,6 @@ public class LoanService {
         loan.setBooks(books);
         loan.setUser(user);
         loanRepository.save(loan);
-       
     }
 
     public void deleteLoan(Integer id){

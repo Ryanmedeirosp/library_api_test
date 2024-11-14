@@ -43,5 +43,4 @@ public class BookService {
         Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("zika"));
         bookRepository.deleteById(id);
     }
-
 }

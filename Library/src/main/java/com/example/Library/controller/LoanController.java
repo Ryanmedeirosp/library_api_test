@@ -29,6 +29,11 @@ public class LoanController {
         return loanService.getAllLoan();
     }
 
+    @GetMapping()
+    public List<Loan> getUserByLoanInDelay() {
+        return loanService.getUserByLoanInDelay();
+    }
+
     @GetMapping("/{id}")
     public Loan getLoanById(@PathVariable Integer id){
         return loanService.getLoanById(id);
