@@ -34,18 +34,22 @@ public class Book {
     @Column(name = "isbn")
     public String isbn;
 
+    @Column(name= "status")
+    public String status;
+
     @Column(name = "year_of_publication")
     public Integer yearOfPublication;
 
+    @ManyToMany(mappedBy = "books")  // Relacionamento bidirecional, 'books' é o nome do campo em Loan
     @JsonIgnore
-    @ManyToMany
     List<Loan> loans;
 
-    public Book(String title, String author, String isbn, Integer yearOfPublication) {
+    public Book(String title, String author, String isbn, Integer yearOfPublication, String status) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.yearOfPublication = yearOfPublication;
+        this.status = status;
     }
 
 }
