@@ -45,6 +45,7 @@ public class Loan {
         joinColumns = @JoinColumn(name = "id_book"), 
         inverseJoinColumns = @JoinColumn(name = "id_loan"))
     List<Book> books;
+    
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="id_user", nullable=false)
