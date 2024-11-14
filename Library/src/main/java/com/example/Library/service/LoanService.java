@@ -38,15 +38,25 @@ public class LoanService {
     public Loan getLoanById(Integer id){
         return loanRepository.findById(id).orElse(null);
     }
-
-    public void createLoan(LoanCreateDto request){
+    public void createLoan(LoanCreateDto request) {
         List<Book> books = new ArrayList<>();
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("teste"));
-        Book book = new Book();
-        for (String isnb : request.getBookCodes()) {
-            book = bookRepository.findByIsbn(isnb).orElseThrow(() -> new RuntimeException("teste"));
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    
+        for (Integer id : request.getBookCodes()) {
+            Book book = bookRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+    
+            if (!book.getStatus().equals("Disponivel")) {
+                throw new RuntimeException("O livro já está emprestado.");
+            }
+    
+            book.setStatus("Não Disponivel");  // Atualize o status do livro
             books.add(book);
         }
+    
+        bookRepository.saveAll(books);  // Persistir os livros com status alterado
+    
         Loan loan = new Loan();
         loan.setStartDate(LocalDate.now());
         loan.setDevolutionDate(LocalDate.now().plusDays(7));
@@ -55,6 +65,7 @@ public class LoanService {
         loan.setUser(user);
         loanRepository.save(loan);
     }
+    
 
     public void deleteLoan(Integer id){
         loanRepository.deleteById(id);

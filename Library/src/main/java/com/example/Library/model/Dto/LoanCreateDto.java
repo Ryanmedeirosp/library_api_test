@@ -17,6 +17,6 @@ public class LoanCreateDto {
 
     String email;
 
-    List<String> bookCodes;
+    List<Integer> bookCodes;
 }
    
