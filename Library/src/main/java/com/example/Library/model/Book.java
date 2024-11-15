@@ -35,7 +35,7 @@ public class Book {
     public String isbn;
 
     @Column(name= "status")
-    public String status;
+    public Boolean status;
 
     @Column(name = "year_of_publication")
     public Integer yearOfPublication;
@@ -44,7 +44,7 @@ public class Book {
     @JsonIgnore
     List<Loan> loans;
 
-    public Book(String title, String author, String isbn, Integer yearOfPublication, String status) {
+    public Book(String title, String author, String isbn, Integer yearOfPublication, Boolean status) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
