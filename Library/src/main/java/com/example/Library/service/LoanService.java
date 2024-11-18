@@ -29,6 +29,19 @@ public class LoanService {
     }
 
     public List<Loan> getAllLoan(){
+
+        List<Loan> loans = loanRepository.findAll();
+
+        for (Loan loan : loans) {
+            
+            if (loan.getDevolutionDate().isAfter(LocalDate.now())) {
+                
+                loan.status = "atrasado";
+            }
+        };
+
+        loanRepository.saveAll(loans);
+
         return loanRepository.findAll();
     }
 

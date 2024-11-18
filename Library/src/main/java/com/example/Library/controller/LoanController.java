@@ -33,7 +33,6 @@ public class LoanController {
     //     return loanService.getUserByLoanInDelay();
     // }
 
-
     @GetMapping("/{id}")
     public Loan getLoanById(@PathVariable Integer id){
         return loanService.getLoanById(id);
