@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Library.model.Book;
 import com.example.Library.model.Dto.LoanCreateDto;
+import com.example.Library.model.Enums.StatusEnum;
 import com.example.Library.model.Loan;
 import com.example.Library.model.User;
 import com.example.Library.repository.BookRepository;
@@ -44,9 +45,9 @@ public class LoanService {
         return loanRepository.findAll();
     }
 
-    public List<Loan> getUserByLoanInDelay(){
-        return loanRepository.findUserByLoanInDelay();
-    }
+    // public List<Loan> getUserByLoanInDelay(){
+    //     return loanRepository.findUserByLoanInDelay();
+    // }
 
     public Loan getLoanById(Integer id){
         return loanRepository.findById(id).orElse(null);
@@ -60,11 +61,11 @@ public class LoanService {
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
     
-            if (!book.getStatus().equals("Disponivel")) {
+            if (!book.getStatus().equals(true)) {
                 throw new RuntimeException("O livro já está emprestado.");
             }
     
-            book.setStatus("Não Disponivel");  // Atualize o status do livro
+            book.setStatus(false);  // Atualize o status do livro
             books.add(book);
         }
     
@@ -73,7 +74,7 @@ public class LoanService {
         Loan loan = new Loan();
         loan.setStartDate(LocalDate.now());
         loan.setDevolutionDate(LocalDate.now().plusDays(7));
-        loan.setStatus("Em andamento");
+        loan.setStatus(StatusEnum.EM_ANDAMENTO);
         loan.setBooks(books);
         loan.setUser(user);
         loanRepository.save(loan);

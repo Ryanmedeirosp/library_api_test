@@ -28,11 +28,10 @@ public class LoanController {
     public List<Loan> getAllLoans() {
         return loanService.getAllLoan();
     }
-
-    @GetMapping("/delay")
-    public List<Loan> getUserByLoanInDelay() {
-        return loanService.getUserByLoanInDelay();
-    }
+    // @GetMapping("/delay")
+    // public List<Loan> getUserByLoanInDelay() {
+    //     return loanService.getUserByLoanInDelay();
+    // }
 
     @GetMapping("/{id}")
     public Loan getLoanById(@PathVariable Integer id){
