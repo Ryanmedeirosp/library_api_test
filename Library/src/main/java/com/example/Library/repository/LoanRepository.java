@@ -13,4 +13,5 @@ import com.example.Library.model.Loan;
 public interface LoanRepository extends JpaRepository<Loan, Integer> {
     @Query("SELECT l FROM Loan l WHERE l.status = 'Atraso'")
     List<Loan> findUserByLoanInDelay();
+    List<Loan> findAllByfindAllByStatus(String status);
 } 

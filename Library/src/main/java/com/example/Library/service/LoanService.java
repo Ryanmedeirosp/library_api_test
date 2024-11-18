@@ -28,6 +28,19 @@ public class LoanService {
     }
 
     public List<Loan> getAllLoan(){
+
+        List<Loan> loans = loanRepository.findAll();
+
+        for (Loan loan : loans) {
+            
+            if (loan.getDevolutionDate().isAfter(LocalDate.now())) {
+                
+                loan.status = "atrasado";
+            }
+        };
+
+        loanRepository.saveAll(loans);
+
         return loanRepository.findAll();
     }
 
@@ -70,11 +83,4 @@ public class LoanService {
     public void deleteLoan(Integer id){
         loanRepository.deleteById(id);
     }
-
-    // public void updateTable(){
-
-    //     Long tableCount = loanRepository.count();
-
-    //     System.out.println(tableCount);
-    // }
 }
