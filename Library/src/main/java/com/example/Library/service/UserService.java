@@ -32,6 +32,7 @@ public class UserService {
 
         if (userRepository.existsByEmail(user.getEmail()) == true) throw new RuntimeException("O email já existe"); 
 
+        user.setStatus(true);
         user.setLoans(new ArrayList<>());
         user.setSingleCard(UUID.randomUUID());
         userRepository.save(user);
