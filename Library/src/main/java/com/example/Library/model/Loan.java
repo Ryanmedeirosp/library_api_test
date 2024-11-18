@@ -3,6 +3,7 @@ package com.example.Library.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.Library.model.Enums.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -36,7 +37,7 @@ public class Loan {
     public LocalDate devolutionDate;
 
     @Column(name = "status")
-    public String status;
+    public StatusEnum status;
 
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -52,7 +53,7 @@ public class Loan {
     @JoinColumn(name="id_user", nullable=false)
     User user;
 
-    public Loan(LocalDate startDate, LocalDate devolutionDate, String status) {
+    public Loan(LocalDate startDate, LocalDate devolutionDate, StatusEnum status) {
         this.startDate = startDate;
         this.devolutionDate = devolutionDate;
         this.status = status;

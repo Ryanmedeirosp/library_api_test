@@ -1,17 +1,19 @@
+CREATE TYPE enum_loans AS ENUM ('EM_ANDAMENTO', 'PENDENTE', 'CONCLUIDO');
+
 CREATE TABLE users(
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
     register_date DATE NOT NULL,
     single_card UUID NOT NULL,
-    status VARCHAR(20) DEFAULT 'inativo'
+    status BOOLEAN DEFAULT true  
 );
 
 CREATE TABLE loans(
     id SERIAL PRIMARY KEY NOT NULL,
     start_date DATE NOT NULL,
     devolution_date DATE NOT NULL,
-    status VARCHAR(50) NOT NULL,
+    status enum_loans NOT NULL,
     id_user INTEGER REFERENCES users(id)
 );
 
@@ -20,6 +22,7 @@ CREATE TABLE books(
     title VARCHAR(50) NOT NULL,
     author VARCHAR(50) NOT NULL,
     isbn VARCHAR(13) NOT NULL,
+    status BOOLEAN DEFAULT true,  
     year_of_publication INTEGER NOT NULL
 );
 
@@ -29,8 +32,3 @@ CREATE TABLE books_loans(
     book_id INTEGER REFERENCES books(id)
 );
 
-CREATE TABLE loan_book(
-    id SERIAL PRIMARY KEY NOT NULL,
-    id_loan INTEGER REFERENCES loans(id),
-    id_book INTEGER REFERENCES books(id)
-);

@@ -37,13 +37,13 @@ public class User {
     public UUID singleCard;
 
     @Column(name = "status")
-    public String status;
+    public Boolean status;
 
     //Relação Um para Muitos entre Usuário e Empréstimo 
     @OneToMany(mappedBy = "user")
     List<Loan> loans;
 
-    public User(String name, String email, LocalDate registerDate, String status) {
+    public User(String name, String email, LocalDate registerDate, Boolean status) {
         this.name = name;
         this.email = email;
         this.registerDate = registerDate;
