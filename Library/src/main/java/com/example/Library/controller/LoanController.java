@@ -29,7 +29,7 @@ public class LoanController {
         return loanService.getAllLoan();
     }
 
-    @GetMapping()
+    @GetMapping("/delay")
     public List<Loan> getUserByLoanInDelay() {
         return loanService.getUserByLoanInDelay();
     }
