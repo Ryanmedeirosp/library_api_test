@@ -9,6 +9,8 @@ header{
     align-items: center;
     gap: 40px;
     justify-content: center;
+    
+    
 }
 #img-logo{
     display: flex;
@@ -33,4 +35,18 @@ header{
     height: 30px;
     border: 1px solid black;
     border-radius: 10px;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+#div-banner{
+    display: flex;
+    width: 100%;
+}
+#div-banner img{
+    display: flex;
+    width: 100%;
 }
