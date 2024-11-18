@@ -34,9 +34,9 @@ public class LoanService {
 
         for (Loan loan : loans) {
             
-            if (loan.getDevolutionDate().isAfter(LocalDate.now())) {
+            if (loan.getDevolutionDate().isAfter(loan.startDate)) {
                 
-                loan.status = "atrasado";
+                loan.setStatus(StatusEnum.PENDENTE);
             }
         };
 
@@ -83,5 +83,20 @@ public class LoanService {
 
     public void deleteLoan(Integer id){
         loanRepository.deleteById(id);
+    }
+
+    public List<Loan> updateStatus(List<Loan> loans){
+
+        loans = loanRepository.findAll();
+
+        for (Loan loan : loans) {
+            
+            if (loan.getDevolutionDate().isAfter(loan.startDate)) {
+                
+                loan.setStatus(StatusEnum.PENDENTE);
+            }
+        };
+
+        return loans;
     }
 }
