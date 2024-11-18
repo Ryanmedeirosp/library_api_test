@@ -9,12 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class LoanCreateDto {
 
-    // LocalDate startDate;
-
-    // LocalDate devolutionDate;
-
-    // String status;
-
     String email;
 
     List<Integer> bookCodes;

@@ -79,10 +79,37 @@ public class LoanService {
         loan.setUser(user);
         loanRepository.save(loan);
     }
+
+
     
 
     public void deleteLoan(Integer id){
         loanRepository.deleteById(id);
+    }
+
+    public void updateTable(Integer id, LoanCreateDto request ){
+        Loan loan = loanRepository.findById(id).orElseThrow(() -> new RuntimeException("Empréstimo não encontrado"));
+        List<Book> books = new ArrayList<>();
+        userRepository.findByEmail(request.getEmail())
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    
+        for (Integer code : request.getBookCodes()) {
+            Book book = bookRepository.findById(code)
+                    .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+    
+            if (book.getStatus().equals(true)) {
+                throw new RuntimeException("O livro não está emprestado");
+            }
+    
+            book.setStatus(true);  // Atualize o status do livro
+            books.add(book);
+        }
+       
+        
+        loan.setStatus(StatusEnum.CONCLUIDO);
+
+        loanRepository.save(loan);
+    
     }
 
     public List<Loan> updateStatus(List<Loan> loans){
