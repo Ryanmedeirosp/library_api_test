@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,9 +53,9 @@ public class LoanController {
         loanService.deleteLoan(id);
     }
 
-    //http://localhost:8080/loans/updatetest
-    // @GetMapping("/updatetest")
-    // public void updateTable(){
-    //     loanService.updateTable();
-    // }
+    // http://localhost:8080/loans/updatetest
+    @PutMapping()
+    public void updateTable(@PathVariable Integer id, @PathVariable LoanCreateDto loan){
+        loanService.updateTable(id, loan);
+    }
 }

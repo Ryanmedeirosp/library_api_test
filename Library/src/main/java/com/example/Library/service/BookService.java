@@ -41,6 +41,7 @@ public class BookService {
 
     public void createBook(Book book){
 
+        book.setStatus(true);
         book.setLoans(new ArrayList<>());
 
         bookRepository.save(book);
