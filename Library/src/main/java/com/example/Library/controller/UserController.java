@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Library.model.User;
 import com.example.Library.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public void addUser(@RequestBody User user) {
+    public void addUser(@RequestBody @Valid User user) {
         System.out.println(user.toString());
         userService.createUser(user);
     }
