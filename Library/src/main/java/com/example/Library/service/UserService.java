@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.example.Library.model.User;
+import com.example.Library.model.Dto.UserCreateDto;
 import com.example.Library.repository.UserRepository;
 
 @Service
@@ -30,17 +31,23 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public void createUser(User user){
+    public void createUser(UserCreateDto request){
 
-        if (userVerification(user)) {
+        if (userVerification(request)) {
 
-        user.setRegisterDate(LocalDate.now());
-        user.setStatus(true);
-        user.setLoans(new ArrayList<>());
-        user.setSingleCard(UUID.randomUUID());
-        userRepository.save(user);
+            User user = new User();
+
+            user.setName(request.getName());
+            user.setEmail(request.getEmail());
+
+            user.setRegisterDate(LocalDate.now());
+            user.setStatus(true);
+            user.setLoans(new ArrayList<>());
+            user.setSingleCard(UUID.randomUUID());
+            userRepository.save(user);
         }
     }
+    
     public void deleteUser(Integer id){
 
         if (id == null || id == 0) throw new IllegalArgumentException(); 
@@ -48,7 +55,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public Boolean userVerification(User user){
+    public Boolean userVerification(UserCreateDto user){
 
         if(user.getName() == null || user.getName().isBlank()) throw new IllegalArgumentException();
         if(user.getEmail() == null || user.getEmail().isBlank() || userRepository.existsByEmail(user.getEmail()) == true) throw new IllegalArgumentException();

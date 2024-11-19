@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.Library.model.Book;
+import com.example.Library.model.Dto.BookCreateDto;
 import com.example.Library.repository.BookRepository;
 
 @Service
@@ -45,10 +46,17 @@ public class BookService {
         return bookRepository.findByYearOfPublication(yearOfPublication);
     }
 
-    public void createBook(Book book){
+    public void createBook(BookCreateDto request){
 
-        if (bookVerification(book)) {
+        if (bookVerification(request)) {
 
+            Book book = new Book();
+
+            book.setTitle(request.getTitle());
+            book.setAuthor(request.getAuthor());
+            book.setIsbn(request.getIsbn());
+            book.setYearOfPublication(request.getYearOfPublication());
+            
             book.setStatus(true);
             book.setLoans(new ArrayList<>());
     
@@ -64,11 +72,12 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public Boolean bookVerification(Book request){
+    public Boolean bookVerification(BookCreateDto request){
 
         if(request.getTitle() == null || request.getTitle().isBlank()) throw new IllegalArgumentException();
         if(request.getAuthor() == null || request.getAuthor().isBlank()) throw new IllegalArgumentException();
         if(request.getIsbn() == null || request.getIsbn().isBlank()) throw new IllegalArgumentException();
+        if(request.getYearOfPublication() == null || request.getYearOfPublication() < 0) throw new IllegalArgumentException();
 
         return true;
     }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.Library.model.Book;
+import com.example.Library.model.Dto.BookCreateDto;
 import com.example.Library.service.BookService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,7 +55,7 @@ public class BookController {
     }
 
     @PostMapping()
-    public void addBook(@RequestBody Book book) {
+    public void addBook(@RequestBody BookCreateDto book) {
          bookService.createBook(book);
     }
 

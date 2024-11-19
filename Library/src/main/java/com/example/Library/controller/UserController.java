@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Library.model.User;
+import com.example.Library.model.Dto.UserCreateDto;
 import com.example.Library.service.UserService;
 
 import jakarta.validation.Valid;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public void addUser(@RequestBody @Valid User user) {
+    public void addUser(@RequestBody @Valid UserCreateDto user) {
         System.out.println(user.toString());
         userService.createUser(user);
     }
