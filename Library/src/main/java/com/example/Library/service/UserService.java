@@ -34,14 +34,13 @@ public class UserService {
 
         if (userVerification(user)) {
 
-        if (userRepository.existsByEmail(user.getEmail()) == true) throw new RuntimeException("O email já existe"); 
-
         user.setRegisterDate(LocalDate.now());
         user.setStatus(true);
         user.setLoans(new ArrayList<>());
         user.setSingleCard(UUID.randomUUID());
-        userRepository.save(user);}
-
+        userRepository.save(user);
+        }
+    }
     public void deleteUser(Integer id){
 
         if (id == null || id == 0) throw new IllegalArgumentException(); 
