@@ -54,8 +54,8 @@ public class LoanController {
     }
 
     // http://localhost:8080/loans/updatetest
-    @PutMapping()
-    public void updateTable(@PathVariable Integer id, @PathVariable LoanCreateDto loan){
-        loanService.updateTable(id, loan);
+    @PutMapping("/{id}")
+    public void updateTable(@PathVariable Integer id, @RequestBody LoanCreateDto loan){
+        loanService.updateTable(id,loan);
     }
 }

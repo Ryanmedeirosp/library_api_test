@@ -28,6 +28,9 @@ public class BookService {
     }
 
     public Book getBookById(Integer id) {
+
+        if (id == null || id == 0) throw new IllegalArgumentException(); 
+
         return bookRepository.findById(id).orElse(null);
     }
 
@@ -36,18 +39,37 @@ public class BookService {
     }
 
     public List<Book> getBookByYearOfPublication(Integer yearOfPublication){
+
+        if (yearOfPublication == null || yearOfPublication == 0) throw new IllegalArgumentException(); 
+
         return bookRepository.findByYearOfPublication(yearOfPublication);
     }
 
     public void createBook(Book book){
 
-        book.setStatus(true);
-        book.setLoans(new ArrayList<>());
+        if (bookVerification(book)) {
 
-        bookRepository.save(book);
+            book.setStatus(true);
+            book.setLoans(new ArrayList<>());
+    
+            bookRepository.save(book);
+            
+        }
     }
 
     public void deleteBook(Integer id){
+
+        if (id == null || id == 0) throw new IllegalArgumentException(); 
+        
         bookRepository.deleteById(id);
+    }
+
+    public Boolean bookVerification(Book request){
+
+        if(request.getTitle() == null || request.getTitle().isBlank()) throw new IllegalArgumentException();
+        if(request.getAuthor() == null || request.getAuthor().isBlank()) throw new IllegalArgumentException();
+        if(request.getIsbn() == null || request.getIsbn().isBlank()) throw new IllegalArgumentException();
+
+        return true;
     }
 }

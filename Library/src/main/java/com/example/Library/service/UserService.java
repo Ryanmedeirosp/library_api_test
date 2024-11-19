@@ -1,5 +1,6 @@
 package com.example.Library.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,23 +24,35 @@ public class UserService {
     }
     
     public User getUserById(Integer id){
+        
+        if (id == null || id == 0) throw new IllegalArgumentException(); 
+
         return userRepository.findById(id).orElse(null);
     }
 
     public void createUser(User user){
 
-        System.out.println(user.toString());
+        if (userVerification(user)) {
 
-        if (userRepository.existsByEmail(user.getEmail()) == true) throw new RuntimeException("O email já existe"); 
-
+        user.setRegisterDate(LocalDate.now());
         user.setStatus(true);
         user.setLoans(new ArrayList<>());
         user.setSingleCard(UUID.randomUUID());
         userRepository.save(user);
+        }
     }
-
     public void deleteUser(Integer id){
+
+        if (id == null || id == 0) throw new IllegalArgumentException(); 
+
         userRepository.deleteById(id);
     }
 
+    public Boolean userVerification(User user){
+
+        if(user.getName() == null || user.getName().isBlank()) throw new IllegalArgumentException();
+        if(user.getEmail() == null || user.getEmail().isBlank() || userRepository.existsByEmail(user.getEmail()) == true) throw new IllegalArgumentException();
+
+        return true;
+    }
 }
