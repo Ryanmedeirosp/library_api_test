@@ -28,10 +28,12 @@ public class LoanService {
         this.loanRepository = loanRepository;
     }
 
+    //Buscar todos
     public List<Loan> getAllLoan(){
 
         List<Loan> loans = loanRepository.findAll();
 
+        updateStatus(loans);
         for (Loan loan : loans) {
             
             if (LocalDate.now().isAfter(loan.devolutionDate)) {
@@ -45,9 +47,17 @@ public class LoanService {
         return loanRepository.findAll();
     }
 
-    // public List<Loan> getUserByLoanInDelay(){
-    //     return loanRepository.findUserByLoanInDelay();
-    // }
+    //Buscar por Status
+    public List<Loan> getLoansByStatus(StatusEnum status){
+
+        List<Loan> loans = loanRepository.findAll();
+
+        updateStatus(loans);
+
+        loanRepository.saveAll(loans);
+
+        return loanRepository.findByStatus(status);
+    }
 
     public Loan getLoanById(Integer id){
         return loanRepository.findById(id).orElse(null);
@@ -80,9 +90,6 @@ public class LoanService {
         loanRepository.save(loan);
     }
 
-
-    
-
     public void deleteLoan(Integer id){
         loanRepository.deleteById(id);
     }
@@ -110,7 +117,6 @@ public class LoanService {
 
             books.add(book);
         }
-       
         
         loan.setStatus(StatusEnum.CONCLUIDO);
 
@@ -118,13 +124,14 @@ public class LoanService {
     
     }
 
+    //Atualiza o Status do empréstimo para Atrasado
     public List<Loan> updateStatus(List<Loan> loans){
 
         loans = loanRepository.findAll();
 
         for (Loan loan : loans) {
             
-            if (loan.getDevolutionDate().isAfter(loan.startDate)) {
+            if (LocalDate.now().isAfter(loan.devolutionDate)) {
                 
                 loan.setStatus(StatusEnum.PENDENTE);
             }
