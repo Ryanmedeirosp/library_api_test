@@ -34,7 +34,7 @@ public class LoanService {
 
         for (Loan loan : loans) {
             
-            if (loan.getDevolutionDate().isAfter(loan.startDate)) {
+            if (LocalDate.now().isAfter(loan.devolutionDate)) {
                 
                 loan.setStatus(StatusEnum.PENDENTE);
             }
@@ -61,7 +61,7 @@ public class LoanService {
             Book book = bookRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
     
-            if (!book.getStatus().equals(true)) {
+            if (book.getStatus().equals(false)) {
                 throw new RuntimeException("O livro já está emprestado.");
             }
     
@@ -88,12 +88,17 @@ public class LoanService {
     }
 
     public void updateTable(Integer id, LoanCreateDto request ){
+
         Loan loan = loanRepository.findById(id).orElseThrow(() -> new RuntimeException("Empréstimo não encontrado"));
+
         List<Book> books = new ArrayList<>();
+
         userRepository.findByEmail(request.getEmail())
             .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     
+
         for (Integer code : request.getBookCodes()) {
+
             Book book = bookRepository.findById(code)
                     .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
     
@@ -102,6 +107,7 @@ public class LoanService {
             }
     
             book.setStatus(true);  // Atualize o status do livro
+
             books.add(book);
         }
        

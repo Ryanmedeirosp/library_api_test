@@ -1,5 +1,6 @@
 package com.example.Library.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,6 +33,7 @@ public class UserService {
 
         if (userRepository.existsByEmail(user.getEmail()) == true) throw new RuntimeException("O email já existe"); 
 
+        user.setRegisterDate(LocalDate.now());
         user.setStatus(true);
         user.setLoans(new ArrayList<>());
         user.setSingleCard(UUID.randomUUID());

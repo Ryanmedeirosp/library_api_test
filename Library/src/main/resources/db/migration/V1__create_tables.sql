@@ -1,4 +1,4 @@
-CREATE TYPE enum_loans AS ENUM ('EM_ANDAMENTO', 'PENDENTE', 'CONCLUIDO');
+
 
 CREATE TABLE users(
     id SERIAL PRIMARY KEY NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE loans(
     id SERIAL PRIMARY KEY NOT NULL,
     start_date DATE NOT NULL,
     devolution_date DATE NOT NULL,
-    status enum_loans NOT NULL,
+    status varchar(50) check (status in ('EM_ANDAMENTO','PENDENTE', 'CONCLUIDO')),
     id_user INTEGER REFERENCES users(id)
 );
 
