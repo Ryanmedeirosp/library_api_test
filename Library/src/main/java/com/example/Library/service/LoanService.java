@@ -49,7 +49,7 @@ public class LoanService {
 
         loanRepository.saveAll(loans);
 
-        return loanRepository.findByStatusEnum(status);
+        return loanRepository.findByStatus(status);
     }
 
     public Loan getLoanById(Integer id){
@@ -104,7 +104,6 @@ public class LoanService {
             book.setStatus(true);  // Atualize o status do livro
             books.add(book);
         }
-       
         
         loan.setStatus(StatusEnum.CONCLUIDO);
 
@@ -119,7 +118,7 @@ public class LoanService {
 
         for (Loan loan : loans) {
             
-            if (loan.getDevolutionDate().isAfter(loan.startDate)) {
+            if (LocalDate.now().isAfter(loan.devolutionDate)) {
                 
                 loan.setStatus(StatusEnum.PENDENTE);
             }

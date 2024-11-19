@@ -30,7 +30,6 @@ public class Book {
     @Column(name = "author")
     public String author;
 
-
     @Column(name = "isbn")
     public String isbn;
 
