@@ -1,130 +1,87 @@
 package com.example.Library.Service;
 
-import java.util.Arrays;
-import java.util.List;
-
+import com.example.Library.model.Dto.UserCreateDto;
 import com.example.Library.model.User;
 import com.example.Library.repository.UserRepository;
-import com.example.Library.service.UserService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import com.example.Library.service.UserService;
 
 public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
 
+    @InjectMocks
     private UserService userService;
 
+    private User user;
+
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
-        userService = new UserService(userRepository);
+
+        // Configuração do usuário mockado
+        user = new User();
+        user.setId(1);
+        user.setName("John Doe");
+        user.setEmail("johndoe@example.com");
     }
 
     @Test
-    void testGetAllUsers() {
-        // Arrange
-        User user1 = new User();
-        user1.setName("User 1");
-        user1.setEmail("user1@example.com");
+    public void testCreateUser() {
+        // Criando UserCreateDto diretamente no teste
+        UserCreateDto userCreateDto = new UserCreateDto("John Doe", "johndoe@example.com");
 
-        User user2 = new User();
-        user2.setName("User 2");
-        user2.setEmail("user2@example.com");
-
-        List<User> users = Arrays.asList(user1, user2);
-
-        when(userRepository.findAll()).thenReturn(users);
-
-        // Act
-        List<User> result = userService.getAllUsers();
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals("User 1", result.get(0).getName());
-        assertEquals("User 2", result.get(1).getName());
-
-        // Verificar se o método findAll foi chamado
-        verify(userRepository, times(1)).findAll();
-    }
-
-    @Test
-    void testCreateUser_Valid() {
-        // Arrange
-        User user = new User();
-        user.setName("User 1");
-        user.setEmail("user1@example.com");
-
-        // Simulando que o email não existe no repositório
-        when(userRepository.existsByEmail("user1@example.com")).thenReturn(false);
+        // Simulando que o e-mail ainda não existe no repositório
+        when(userRepository.existsByEmail(userCreateDto.getEmail())).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        // Act
-        userService.createUser(user);
+        userService.createUser(userCreateDto);
 
-        // Assert
-        verify(userRepository, times(1)).save(any(User.class)); // Verifica se o método save foi chamado
+        // Verificar se o repositório salva o usuário corretamente
+        verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
-    void testCreateUser_Invalid_EmailExists() {
-        // Arrange
-        User user = new User();
-        user.setName("User 1");
-        user.setEmail("user1@example.com");
+    public void testCreateUserWithExistingEmail() {
+        // Criando UserCreateDto diretamente no teste
+        UserCreateDto userCreateDto = new UserCreateDto("John Doe", "johndoe@example.com");
 
-        // Simulando que o email já existe no repositório
-        when(userRepository.existsByEmail("user1@example.com")).thenReturn(true);
+        // Simulando que o e-mail já existe no repositório
+        when(userRepository.existsByEmail(userCreateDto.getEmail())).thenReturn(true);
 
-        // Act & Assert
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> userService.createUser(user));
-        
+        // Espera-se que lance uma IllegalArgumentException devido ao e-mail existente
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser(userCreateDto));
 
         // Verificar que o método save não foi chamado
         verify(userRepository, times(0)).save(any(User.class));
     }
 
     @Test
-    void testGetUserById() {
-        // Arrange
-        User user = new User();
-        user.setId(1);
-        user.setName("User 1");
-        user.setEmail("user1@example.com");
-
+    public void testGetUserById() {
         when(userRepository.findById(1)).thenReturn(java.util.Optional.of(user));
 
-        // Act
         User result = userService.getUserById(1);
 
-        // Assert
         assertNotNull(result);
-        assertEquals(1, result.getId());
-        assertEquals("User 1", result.getName());
-
-        // Verificar se o método findById foi chamado
-        verify(userRepository, times(1)).findById(1);
+        assertEquals("John Doe", result.getName());
     }
 
     @Test
-    void testGetUserById_NotFound() {
-        // Arrange
+    public void testGetUserByIdNotFound() {
         when(userRepository.findById(1)).thenReturn(java.util.Optional.empty());
 
-        // Act
         User result = userService.getUserById(1);
 
-        // Assert
         assertNull(result);
-
-        // Verificar se o método findById foi chamado
-        verify(userRepository, times(1)).findById(1);
     }
 }

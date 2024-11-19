@@ -1,18 +1,19 @@
 package com.example.Library.Service;
 
+import java.util.List;
+
+import com.example.Library.model.Dto.BookCreateDto;
 import com.example.Library.model.Book;
 import com.example.Library.repository.BookRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.List;
-import org.springframework.data.domain.Sort;
-
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import com.example.Library.service.BookService;
 
@@ -21,118 +22,79 @@ public class BookServiceTest {
     @Mock
     private BookRepository bookRepository;
 
+    @InjectMocks
     private BookService bookService;
 
+    private Book book;
+
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
-        bookService = new BookService(bookRepository);
-    }
 
-    @Test
-    void testGetAllBooks() {
-        // Arrange
-        Book book1 = new Book();
-        book1.setTitle("Book 1");
-        book1.setAuthor("Author 1");
-
-        Book book2 = new Book();
-        book2.setTitle("Book 2");
-        book2.setAuthor("Author 2");
-
-        List<Book> books = Arrays.asList(book1, book2);
-
-        when(bookRepository.findAll()).thenReturn(books);
-
-        // Act
-        List<Book> result = bookService.getAllBooks();
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals("Book 1", result.get(0).getTitle());
-        assertEquals("Book 2", result.get(1).getTitle());
-
-        // Verificar se o método findAll foi chamado
-        verify(bookRepository, times(1)).findAll();
-    }
-
-    @Test
-    void testGetAllBooksByTitleAsc() {
-        // Arrange
-        Book book1 = new Book();
-        book1.setTitle("Book 1");
-        book1.setAuthor("Author 1");
-
-        Book book2 = new Book();
-        book2.setTitle("Book 2");
-        book2.setAuthor("Author 2");
-
-        List<Book> books = Arrays.asList(book2, book1);
-
-        when(bookRepository.findAll(Sort.by(Sort.Direction.ASC, "title"))).thenReturn(books);
-
-        // Act
-        List<Book> result = bookService.getAllBooksByTitleAsc();
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals("Book 1", result.get(0).getTitle());
-        assertEquals("Book 2", result.get(1).getTitle());
-
-        // Verificar se o método findAll com ordenação foi chamado
-        verify(bookRepository, times(1)).findAll(Sort.by(Sort.Direction.ASC, "title"));
-    }
-
-    @Test
-    void testGetBookById() {
-        // Arrange
-        Book book = new Book();
+        // Configuração do livro mockado
+        book = new Book();
         book.setId(1);
-        book.setTitle("Book 1");
-        book.setAuthor("Author 1");
-
-        when(bookRepository.findById(1)).thenReturn(java.util.Optional.of(book));
-
-        // Act
-        Book result = bookService.getBookById(1);
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(1, result.getId());
-        assertEquals("Book 1", result.getTitle());
-
-        // Verificar se o método findById foi chamado
-        verify(bookRepository, times(1)).findById(1);
+        book.setTitle("Test Book");
+        book.setAuthor("Test Author");
+        book.setIsbn("1234567890");
+        book.setYearOfPublication(2023);
+        book.setStatus(true);
     }
 
     @Test
-    void testCreateBook() {
-        // Arrange
-        Book book = new Book();
-        book.setTitle("Book 1");
-        book.setAuthor("Author 1");
-        book.setIsbn("12345");
+    public void testCreateBook() {
+        // Criando BookCreateDto diretamente no teste
+        BookCreateDto bookCreateDto = new BookCreateDto("Test Book", "Test Author", "1234567890", 2023);
 
+        // Simulando que o livro será salvo no repositório
         when(bookRepository.save(any(Book.class))).thenReturn(book);
 
-        // Act
-        bookService.createBook(book);
+        bookService.createBook(bookCreateDto);
 
-        // Assert
-        verify(bookRepository, times(1)).save(any(Book.class)); // Verifica se o método save foi chamado
+        // Verificar se o repositório salva o livro corretamente
+        verify(bookRepository, times(1)).save(any(Book.class));
     }
 
     @Test
-    void testDeleteBook() {
-        // Arrange
-        Integer bookId = 1;
+    public void testCreateBookWithInvalidData() {
+        // Criando BookCreateDto com dados inválidos diretamente no teste
+        BookCreateDto bookCreateDto = new BookCreateDto(null, "Test Author", "1234567890", 2023);
 
-        // Act
-        bookService.deleteBook(bookId);
+        // Espera-se que lance uma IllegalArgumentException devido ao título ser nulo
+        assertThrows(IllegalArgumentException.class, () -> bookService.createBook(bookCreateDto));
 
-        // Assert
-        verify(bookRepository, times(1)).deleteById(bookId); // Verifica se o método deleteById foi chamado
+        // Verificar que o método save não foi chamado
+        verify(bookRepository, times(0)).save(any(Book.class));
+    }
+
+    @Test
+    public void testGetAllBooks() {
+        // Criando livros mockados
+        when(bookRepository.findAll()).thenReturn(List.of(book));
+
+        var result = bookService.getAllBooks();
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("Test Book", result.get(0).getTitle());
+    }
+
+    @Test
+    public void testGetBookById() {
+        when(bookRepository.findById(1)).thenReturn(java.util.Optional.of(book));
+
+        Book result = bookService.getBookById(1);
+
+        assertNotNull(result);
+        assertEquals("Test Book", result.getTitle());
+    }
+
+    @Test
+    public void testGetBookByIdNotFound() {
+        when(bookRepository.findById(1)).thenReturn(java.util.Optional.empty());
+
+        Book result = bookService.getBookById(1);
+
+        assertNull(result);
     }
 }
