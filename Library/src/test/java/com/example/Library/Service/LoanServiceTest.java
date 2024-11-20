@@ -138,6 +138,40 @@ public class LoanServiceTest {
         assertEquals(StatusEnum.EM_ANDAMENTO, result.get(0).getStatus());
     }
 
+    @Test
+    public void testUpdateLoansStatus(){
+
+        // Criando empréstimos mockados
+        List<Loan> loans = new ArrayList<>();
+        Loan loan = new Loan();
+        loan.setStartDate(LocalDate.now());
+        loan.setDevolutionDate(LocalDate.now().plusDays(7));
+        loan.setStatus(StatusEnum.EM_ANDAMENTO);
+        loan.setUser(user);
+        loan.setBooks(Arrays.asList(book));
+        loans.add(loan);
+
+        //Simular a verificação para Update do status
+
+        for (Loan loanLoop : loans) {
+            
+            //Verificão com uma data que deve ser posterior a data de devolução
+            LocalDate expiredDate = LocalDate.now().plusDays(8);
+
+            if (expiredDate.isAfter(loanLoop.devolutionDate)) {
+                
+                loanLoop.setStatus(StatusEnum.PENDENTE);
+            }
+        }
+
+        //Chamando a lista com o Status Pendente
+        when(loanRepository.findAll()).thenReturn(loans);
+
+        List<Loan> result = loanService.getAllLoan();
+
+        assertEquals(StatusEnum.PENDENTE, result.get(0).getStatus());
+    }
+
     // @Test
     // public void testUpdateLoanStatus() {
 
