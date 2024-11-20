@@ -138,7 +138,7 @@ public class LoanServiceTest {
 
         // Simulando que o empréstimo foi salvo e que a data de devolução passou
         Loan loan = loanRepository.findById(1).orElseThrow();
-        loan.setDevolutionDate(LocalDate.now().minusDays(1));  // Configurar como se já tivesse passado a data de devolução
+        loan.setDevolutionDate(LocalDate.now().minusDays(7));  // Configurar como se já tivesse passado a data de devolução
 
         // Atualiza o status do empréstimo
         loanService.updateStatus(Arrays.asList(loan));
