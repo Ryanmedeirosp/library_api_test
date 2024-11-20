@@ -34,17 +34,8 @@ public class LoanService {
         List<Loan> loans = loanRepository.findAll();
 
         updateStatus(loans);
-        for (Loan loan : loans) {
-            
-            if (LocalDate.now().isAfter(loan.devolutionDate)) {
-                
-                loan.setStatus(StatusEnum.PENDENTE);
-            }
-        };
 
-        loanRepository.saveAll(loans);
-
-        return loanRepository.findAll();
+        return loans;
     }
 
     //Buscar por Status
@@ -125,7 +116,7 @@ public class LoanService {
     }
 
     //Atualiza o Status do empréstimo para Atrasado
-    public List<Loan> updateStatus(List<Loan> loans){
+    public void updateStatus(List<Loan> loans){
 
         loans = loanRepository.findAll();
 
@@ -137,6 +128,6 @@ public class LoanService {
             }
         };
 
-        return loans;
+        loanRepository.saveAll(loans);
     }
 }
