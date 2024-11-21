@@ -1,6 +1,6 @@
 # Library API Tests
 
-Projeto de finalização da matéria Testes de Back-End. O objetivo da aplicação é ser um sistema de gerenciamento de biblioteca
+Projeto de finalização da matéria Testes de Back-End. O objetivo da aplicação é ser um sistema de gerenciamento de biblioteca constando com funções de cadastro de usuários e livros, buscas, atualização de emprésttimos e outros.
 
 ## Requisitos da aplicação
 
